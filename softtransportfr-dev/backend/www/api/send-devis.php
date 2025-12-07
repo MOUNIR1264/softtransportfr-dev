@@ -61,7 +61,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$to = 'nassim.bendou@outlook.fr';
+$to = 'soft.transports@gmail.com';
 $subject = 'Nouvelle demande de devis - Soft Transports';
 
 $emailBody = "<!DOCTYPE html>
