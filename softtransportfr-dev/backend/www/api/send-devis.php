@@ -25,8 +25,9 @@ if (!$data) {
 }
 
 $recaptchaResponse = $data['recaptchaResponse'] ?? '';
-$recaptchaSecret = '6LdvxA0sAAAAAJO7d9L5NF2lpbIk8TnBfPJPa9oT';
-
+$recaptchaSecret = '6Le_XyQsAAAAAMNN1jdhTzkJesMwQ-3Iiyeo4PwD';
+// key 6Le_XyQsAAAAAIjxssWs7QZwa2EjEN7qocHka36t
+// secret 6Le_XyQsAAAAAMNN1jdhTzkJesMwQ-3Iiyeo4PwD
 $recaptchaVerify = file_get_contents(
     'https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptchaSecret . '&response=' . $recaptchaResponse
 );

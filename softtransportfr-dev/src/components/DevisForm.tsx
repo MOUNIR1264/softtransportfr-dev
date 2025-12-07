@@ -45,7 +45,7 @@ const DevisForm = () => {
       loadRecaptcha();
     } else {
       const script = document.createElement('script');
-      script.src = 'https://www.google.com/recaptcha/api.js?render=6LdvxA0sAAAAACpeP9EJQUyNmqJjCR9w_muTZpZ6';
+      script.src = 'https://www.google.com/recaptcha/api.js?render=6Le_XyQsAAAAAIjxssWs7QZwa2EjEN7qocHka36t';
       script.async = true;
       script.defer = true;
       script.onload = loadRecaptcha;
@@ -84,7 +84,7 @@ const DevisForm = () => {
     setIsSubmitting(true);
 
     try {
-      const recaptchaResponse = await window.grecaptcha.execute('6LdvxA0sAAAAACpeP9EJQUyNmqJjCR9w_muTZpZ6', { action: 'submit_devis' });
+      const recaptchaResponse = await window.grecaptcha.execute('6Le_XyQsAAAAAIjxssWs7QZwa2EjEN7qocHka36t', { action: 'submit_devis' });
 
       const response = await fetch("/api/send-devis.php", {
         method: "POST",
