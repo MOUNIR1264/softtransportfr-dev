@@ -139,10 +139,10 @@ $result = sendEmailViaSMTP(
     $to,
     $subject,
     $emailBody,
-    'no-reply-dev@ventyna.com',
+    'no-reply@soft-transports.fr',
     'ssl0.ovh.net',
     587,
-    'contact@ventyna.com',
+    'contact@soft-transports.fr',
     'Plgp&E^8xYfNJ7/h=u:J',
     ['nassim.bendou@outlook.fr', 'mounirbendou05@gmail.com']
 );
