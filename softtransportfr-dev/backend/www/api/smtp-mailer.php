@@ -1,10 +1,13 @@
 <?php
 
-function sendEmailViaSMTP($to, $subject, $body, $from, $host, $port, $username, $password) {
+function sendEmailViaSMTP($to, $subject, $body, $from, $host, $port, $username, $password, $bcc = null) {
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
     $headers .= "From: {$from}\r\n";
     $headers .= "Reply-To: {$from}\r\n";
+    if ($bcc) {
+        $headers .= "Bcc: {$bcc}\r\n";
+    }
     $headers .= "X-Mailer: PHP/" . phpversion();
 
     $socket = @fsockopen($host, $port, $errno, $errstr, 30);
@@ -63,6 +66,15 @@ function sendEmailViaSMTP($to, $subject, $body, $from, $host, $port, $username, 
     if (substr($response, 0, 3) != "250") {
         fclose($socket);
         return ['success' => false, 'error' => "RCPT TO failed: {$response}"];
+    }
+
+    if ($bcc) {
+        fputs($socket, "RCPT TO: <{$bcc}>\r\n");
+        $response = fgets($socket, 515);
+        if (substr($response, 0, 3) != "250") {
+            fclose($socket);
+            return ['success' => false, 'error' => "RCPT TO (BCC) failed: {$response}"];
+        }
     }
 
     fputs($socket, "DATA\r\n");
