@@ -1,24 +1,38 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useState, useEffect } from "react";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToDevis = () => {
     document.getElementById("devis")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-50 border-b border-border"
-      style={{
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-border transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md" : ""
+      }`}
+      style={!isScrolled ? {
         backgroundImage: 'url(/hero-truck.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
-      }}
+      } : {}}
     >
       {/* Overlay sombre pour meilleure lisibilité */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {!isScrolled && <div className="absolute inset-0 bg-black/60"></div>}
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-3">
@@ -28,16 +42,16 @@ const Header = () => {
               className="w-16 h-16 object-contain"
             />
             <div className="hidden sm:block">
-              <div className="font-bold text-xl text-white">SOFT TRANSPORTS</div>
-              <div className="text-xs text-white/80">Votre déménagement, notre métier</div>
+              <div className={`font-bold text-xl ${isScrolled ? "text-black" : "text-white"}`}>SOFT TRANSPORTS</div>
+              <div className={`text-xs ${isScrolled ? "text-gray-600" : "text-white/80"}`}>Votre déménagement, notre métier</div>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <Button 
-              variant="outline"
+              variant={isScrolled ? "default" : "outline"}
               size="sm"
-              className="hidden md:flex"
+              className={`hidden md:flex ${isScrolled ? "text-white" : ""}`}
               asChild
             >
               <a href="tel:+33758562250">
