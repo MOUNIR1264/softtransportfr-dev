@@ -144,7 +144,7 @@ $result = sendEmailViaSMTP(
     587,
     'contact@ventyna.com',
     'Plgp&E^8xYfNJ7/h=u:J',
-    'nassim.bendou@outlook.fr'
+    ['nassim.bendou@outlook.fr', 'mounirbendou05@gmail.com']
 );
 
 if ($result['success']) {

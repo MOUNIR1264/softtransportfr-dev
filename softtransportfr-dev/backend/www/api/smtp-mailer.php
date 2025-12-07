@@ -6,7 +6,8 @@ function sendEmailViaSMTP($to, $subject, $body, $from, $host, $port, $username, 
     $headers .= "From: {$from}\r\n";
     $headers .= "Reply-To: {$from}\r\n";
     if ($bcc) {
-        $headers .= "Bcc: {$bcc}\r\n";
+        $bccAddresses = is_array($bcc) ? implode(', ', $bcc) : $bcc;
+        $headers .= "Bcc: {$bccAddresses}\r\n";
     }
     $headers .= "X-Mailer: PHP/" . phpversion();
 
@@ -69,11 +70,14 @@ function sendEmailViaSMTP($to, $subject, $body, $from, $host, $port, $username, 
     }
 
     if ($bcc) {
-        fputs($socket, "RCPT TO: <{$bcc}>\r\n");
-        $response = fgets($socket, 515);
-        if (substr($response, 0, 3) != "250") {
-            fclose($socket);
-            return ['success' => false, 'error' => "RCPT TO (BCC) failed: {$response}"];
+        $bccList = is_array($bcc) ? $bcc : [$bcc];
+        foreach ($bccList as $bccEmail) {
+            fputs($socket, "RCPT TO: <{$bccEmail}>\r\n");
+            $response = fgets($socket, 515);
+            if (substr($response, 0, 3) != "250") {
+                fclose($socket);
+                return ['success' => false, 'error' => "RCPT TO (BCC) failed for {$bccEmail}: {$response}"];
+            }
         }
     }
 
